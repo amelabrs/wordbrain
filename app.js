@@ -17,7 +17,7 @@ const memoryText = document.getElementById('memory-text');
 const originText = document.getElementById('origin-text');
 const hintMemory = document.getElementById('hint-memory');
 const hintOrigin = document.getElementById('hint-origin');
-const revealMoreBtn = document.getElementById('reveal-more-btn');
+
 const answerInput = document.getElementById('answer-input');
 const micBtn = document.getElementById('mic-btn');
 const submitBtn = document.getElementById('submit-btn');
@@ -83,13 +83,21 @@ function showWord() {
         document.getElementById('hint-sentence').classList.add('hidden');
     }
 
-    // Hide extra hints initially
-    hintMemory.classList.add('hidden');
-    hintOrigin.classList.add('hidden');
+    // Show memory hint
+    if (word.memory_hint) {
+        memoryText.textContent = word.memory_hint;
+        hintMemory.classList.remove('hidden');
+    } else {
+        hintMemory.classList.add('hidden');
+    }
 
-    // Show/hide reveal button based on availability
-    const hasExtra = word.memory_hint || word.origin;
-    revealMoreBtn.classList.toggle('hidden', !hasExtra);
+    // Show origin
+    if (word.origin) {
+        originText.textContent = word.origin;
+        hintOrigin.classList.remove('hidden');
+    } else {
+        hintOrigin.classList.add('hidden');
+    }
 
     // Reset answer area
     answerInput.value = '';
@@ -100,19 +108,7 @@ function showWord() {
     answerInput.focus();
 }
 
-function revealMoreHints() {
-    const word = words[currentIndex];
-    if (word.memory_hint) {
-        memoryText.textContent = word.memory_hint;
-        hintMemory.classList.remove('hidden');
-    }
-    if (word.origin) {
-        originText.textContent = word.origin;
-        hintOrigin.classList.remove('hidden');
-    }
-    revealMoreBtn.classList.add('hidden');
-    moreHintsRevealed = true;
-}
+
 
 function normalizeAnswer(str) {
     return str.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, ' ');
@@ -219,7 +215,7 @@ function toggleMic() {
 startBtn.addEventListener('click', startQuiz);
 submitBtn.addEventListener('click', checkAnswer);
 nextBtn.addEventListener('click', nextWord);
-revealMoreBtn.addEventListener('click', revealMoreHints);
+
 micBtn.addEventListener('click', toggleMic);
 restartBtn.addEventListener('click', () => {
     showScreen(startScreen);
