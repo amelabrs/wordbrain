@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordBrain</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2d1b69">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>🧠 WordBrain</h1>
+            <div id="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <p id="score-display">0 / 0</p>
+        </header>
+
+        <main id="quiz-area">
+            <div id="start-screen" class="screen active">
+                <h2>Vocabulary Challenge</h2>
+                <p>You'll be given clues — meaning, sentence, hints — and you need to guess the word.</p>
+                <p>Type it or speak it!</p>
+                <button id="start-btn" class="btn primary">Start Quiz</button>
+                <label class="option-label">
+                    <input type="checkbox" id="shuffle-toggle" checked> Shuffle words
+                </label>
+            </div>
+
+            <div id="quiz-screen" class="screen">
+                <div id="clue-card">
+                    <div id="hint-meaning" class="hint-section">
+                        <span class="hint-label">Meaning</span>
+                        <p id="meaning-text"></p>
+                    </div>
+                    <div id="hint-sentence" class="hint-section">
+                        <span class="hint-label">Sentence</span>
+                        <p id="sentence-text"></p>
+                    </div>
+                    <div id="hint-memory" class="hint-section hidden">
+                        <span class="hint-label">Memory Hint</span>
+                        <p id="memory-text"></p>
+                    </div>
+                    <div id="hint-origin" class="hint-section hidden">
+                        <span class="hint-label">Origin</span>
+                        <p id="origin-text"></p>
+                    </div>
+                </div>
+
+                <button id="reveal-more-btn" class="btn secondary">Show More Hints</button>
+
+                <div id="answer-area">
+                    <input type="text" id="answer-input" placeholder="Type your guess..." autocomplete="off" autocapitalize="off">
+                    <button id="mic-btn" class="btn icon" title="Speak your answer">🎤</button>
+                    <button id="submit-btn" class="btn primary">Check</button>
+                </div>
+
+                <div id="feedback" class="hidden">
+                    <p id="feedback-text"></p>
+                    <button id="next-btn" class="btn primary">Next Word →</button>
+                </div>
+            </div>
+
+            <div id="results-screen" class="screen">
+                <h2>Quiz Complete!</h2>
+                <p id="final-score"></p>
+                <div id="results-breakdown"></div>
+                <button id="restart-btn" class="btn primary">Play Again</button>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
