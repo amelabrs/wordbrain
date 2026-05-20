@@ -213,9 +213,24 @@ header h1 {
 /* Answer Area */
 #answer-area {
     display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+#input-row {
+    display: flex;
     gap: 0.5rem;
     align-items: center;
-    margin-bottom: 1rem;
+}
+
+#button-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#button-row .btn {
+    flex: 1;
 }
 
 #answer-input {
