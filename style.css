@@ -202,6 +202,14 @@ header h1 {
     white-space: nowrap;
 }
 
+#build-info {
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(167, 139, 250, 0.4);
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+}
+
 /* Answer Area */
 #answer-area {
     display: flex;

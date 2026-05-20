@@ -259,3 +259,8 @@ answerInput.addEventListener('keydown', (e) => {
 loadWords().then(() => {
     setupSpeechRecognition();
 });
+
+// Build info
+fetch('build.json').then(r => r.json()).then(b => {
+    document.getElementById('build-info').textContent = `Built: ${b.time}`;
+}).catch(() => {});
