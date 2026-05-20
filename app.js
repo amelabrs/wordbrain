@@ -18,6 +18,8 @@ const originText = document.getElementById('origin-text');
 const hintMemory = document.getElementById('hint-memory');
 const hintOrigin = document.getElementById('hint-origin');
 
+const revealHintsBtn = document.getElementById('reveal-hints-btn');
+const dunnoBtn = document.getElementById('dunno-btn');
 const answerInput = document.getElementById('answer-input');
 const micBtn = document.getElementById('mic-btn');
 const submitBtn = document.getElementById('submit-btn');
@@ -83,26 +85,25 @@ function showWord() {
         document.getElementById('hint-sentence').classList.add('hidden');
     }
 
-    // Show memory hint
+    // Hide memory hint and origin (revealed on click)
+    hintMemory.classList.add('hidden');
+    hintOrigin.classList.add('hidden');
     if (word.memory_hint) {
         memoryText.textContent = word.memory_hint;
-        hintMemory.classList.remove('hidden');
-    } else {
-        hintMemory.classList.add('hidden');
     }
-
-    // Show origin
     if (word.origin) {
         originText.textContent = word.origin;
-        hintOrigin.classList.remove('hidden');
-    } else {
-        hintOrigin.classList.add('hidden');
     }
+
+    // Show/hide reveal button
+    const hasExtra = word.memory_hint || word.origin;
+    revealHintsBtn.classList.toggle('hidden', !hasExtra);
 
     // Reset answer area
     answerInput.value = '';
     answerInput.disabled = false;
     submitBtn.disabled = false;
+    dunnoBtn.classList.remove('hidden');
     feedback.classList.add('hidden');
     feedback.classList.remove('correct', 'incorrect');
     answerInput.focus();
@@ -127,6 +128,7 @@ function checkAnswer() {
 
     answerInput.disabled = true;
     submitBtn.disabled = true;
+    dunnoBtn.classList.add('hidden');
     feedback.classList.remove('hidden');
 
     if (isCorrect) {
@@ -211,11 +213,37 @@ function toggleMic() {
     }
 }
 
+// Reveal hints
+function revealExtraHints() {
+    const word = words[currentIndex];
+    if (word.memory_hint) hintMemory.classList.remove('hidden');
+    if (word.origin) hintOrigin.classList.remove('hidden');
+    revealHintsBtn.classList.add('hidden');
+}
+
+// Dunno - give up and show the answer
+function giveUp() {
+    const word = words[currentIndex];
+    answerInput.disabled = true;
+    submitBtn.disabled = true;
+    dunnoBtn.classList.add('hidden');
+    feedback.classList.remove('hidden');
+    feedback.classList.add('incorrect');
+    feedbackText.textContent = `The answer is: "${word.word}"`;
+    results.push({ word: word.word, correct: false });
+    updateProgress();
+    // Also reveal all hints
+    if (word.memory_hint) hintMemory.classList.remove('hidden');
+    if (word.origin) hintOrigin.classList.remove('hidden');
+    revealHintsBtn.classList.add('hidden');
+}
+
 // Event listeners
 startBtn.addEventListener('click', startQuiz);
 submitBtn.addEventListener('click', checkAnswer);
 nextBtn.addEventListener('click', nextWord);
-
+revealHintsBtn.addEventListener('click', revealExtraHints);
+dunnoBtn.addEventListener('click', giveUp);
 micBtn.addEventListener('click', toggleMic);
 restartBtn.addEventListener('click', () => {
     showScreen(startScreen);

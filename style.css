@@ -192,10 +192,14 @@ header h1 {
     display: none !important;
 }
 
-#reveal-more-btn {
+#reveal-hints-btn {
     display: block;
     width: 100%;
     margin-bottom: 1.5rem;
+}
+
+#dunno-btn {
+    white-space: nowrap;
 }
 
 /* Answer Area */
